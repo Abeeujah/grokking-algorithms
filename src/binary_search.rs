@@ -1,38 +1,37 @@
-mod binary_search {
-    use std::cmp::Ordering;
-    pub fn binary_search<T>(list: &[T], item: &T) -> Option<usize>
-    where
-        T: Ord,
-    {
-        // Start searching from the middle
-        // If the item at the middle is
-        // the item you're looking for,
-        // return the middle index
-        // If the item at the middle is greater
-        // than the item you're searching for,
-        // Set search scope upper bound to be mid - 1
-        // Similarly, if the item at the middle is
-        // less than the item you're searching for,
-        // Set search scope lower bound to be mid + 1
-        let mut lower_bound = 0;
-        let mut upper_bound = list.len() - 1;
+use std::cmp::Ordering;
 
-        while lower_bound <= upper_bound {
-            let mid = (lower_bound + upper_bound) >> 1;
-            let guess = &list[mid];
-            match guess.cmp(&item) {
-                Ordering::Less => lower_bound = mid + 1,
-                Ordering::Greater => upper_bound = mid - 1,
-                Ordering::Equal => return Some(mid),
-            }
+pub fn binary_search<T>(list: &[T], item: &T) -> Option<usize>
+where
+    T: Ord,
+{
+    // Start searching from the middle
+    // If the item at the middle is
+    // the item you're looking for,
+    // return the middle index
+    // If the item at the middle is greater
+    // than the item you're searching for,
+    // Set search scope upper bound to be mid - 1
+    // Similarly, if the item at the middle is
+    // less than the item you're searching for,
+    // Set search scope lower bound to be mid + 1
+    let mut lower_bound = 0;
+    let mut upper_bound = list.len() - 1;
+
+    while lower_bound <= upper_bound {
+        let mid = (lower_bound + upper_bound) >> 1;
+        let guess = &list[mid];
+        match guess.cmp(&item) {
+            Ordering::Less => lower_bound = mid + 1,
+            Ordering::Greater => upper_bound = mid - 1,
+            Ordering::Equal => return Some(mid),
         }
-        None
     }
+    None
 }
 
 #[cfg(test)]
 mod tests {
-    use super::binary_search::*;
+    use super::*;
 
     #[test]
     fn test_binary_search() {

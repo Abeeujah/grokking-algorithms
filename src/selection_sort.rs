@@ -1,42 +1,40 @@
-mod selection_sort {
-    pub fn smallest<T: Ord + Copy>(list: &[T]) -> usize {
-        // Return the smallest Item in a list.
-        // Traverse the entire list to be sure.
-        let mut smallest_index = 0;
+pub fn smallest<T: Ord + Copy>(list: &[T]) -> usize {
+    // Return the smallest Item in a list.
+    // Traverse the entire list to be sure.
+    let mut smallest_index = 0;
 
-        // Check the first item against every item in the list
-        // Update the smallest index anytime you encounter an item
-        // smaller than the previous one.
-        for (index, element) in list.iter().enumerate().skip(1) {
-            if element < &list[smallest_index] {
-                smallest_index = index;
-            }
+    // Check the first item against every item in the list
+    // Update the smallest index anytime you encounter an item
+    // smaller than the previous one.
+    for (index, element) in list.iter().enumerate().skip(1) {
+        if element < &list[smallest_index] {
+            smallest_index = index;
         }
-
-        // Return smallest index.
-        smallest_index
     }
 
-    pub fn selection_sort<T: Ord + Copy>(list: Vec<T>) -> Vec<T> {
-        // Make a copy of the list.
-        // Copy will be mutated.
-        let mut sorted: Vec<T> = list;
+    // Return smallest index.
+    smallest_index
+}
 
-        // Swap for n -1 items in the list
-        // If Na and Nb are same, their positions won't change.
-        for i in 0..sorted.len() - 1 {
-            let smallest = smallest(&sorted[i..]);
-            sorted.swap(i, i + smallest);
-        }
+pub fn selection_sort<T: Ord + Copy>(list: Vec<T>) -> Vec<T> {
+    // Make a copy of the list.
+    // Copy will be mutated.
+    let mut sorted: Vec<T> = list;
 
-        // Return the sorted list.
-        sorted
+    // Swap for n -1 items in the list
+    // If Na and Nb are same, their positions won't change.
+    for i in 0..sorted.len() - 1 {
+        let smallest = smallest(&sorted[i..]);
+        sorted.swap(i, i + smallest);
     }
+
+    // Return the sorted list.
+    sorted
 }
 
 #[cfg(test)]
 mod tests {
-    use super::selection_sort::*;
+    use super::*;
     #[test]
     fn test_selection_sort() {
         assert_eq!(smallest(&vec![5, 3, 6, 2, 10]), 3);
